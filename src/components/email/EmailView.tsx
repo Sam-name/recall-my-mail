@@ -28,10 +28,10 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
     return (
       <div className="flex-1 flex items-center justify-center bg-secondary/20">
         <div className="text-center">
-          <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-card rounded-2xl shadow-sm flex items-center justify-center mx-auto mb-4">
             <span className="text-2xl">📧</span>
           </div>
-          <div className="text-muted-foreground">Select an email to read</div>
+          <div className="text-muted-foreground font-medium">Select an email to read</div>
         </div>
       </div>
     );
@@ -41,10 +41,8 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
     setIsSummarizing(true);
     setSummary(null);
     
-    // Simulate AI summarization (would connect to real AI in production)
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Generate a contextual summary based on the email
     const summaries: Record<string, string> = {
       "1": "• John Doe confirms purchase of 20M shares at $45.50/share ($910M total)\n• Legal documents needed: transfer agreement, board resolution, SEC Form 4, escrow\n• Action: Confirm receipt, schedule Thursday call",
       "2": "• Q4 roadmap review needed before Friday sync\n• Key dates: Mobile v2.0 (Oct 15), AI features (Nov 1), Enterprise dashboard (Dec 1)\n• Action: Sign-off required by Wednesday EOD",
@@ -62,7 +60,7 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
   return (
     <div className="flex-1 flex flex-col overflow-hidden bg-background">
       {/* Toolbar */}
-      <div className="flex items-center gap-2 p-4 border-b border-border">
+      <div className="flex items-center gap-2 p-4 border-b border-border bg-card">
         <Button variant="ghost" size="icon" onClick={onBack} className="md:hidden">
           <ArrowLeft className="h-4 w-4" />
         </Button>
@@ -73,7 +71,7 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
         >
           <Star className={cn(
             "h-4 w-4",
-            email.starred ? "fill-yellow-400 text-yellow-400" : ""
+            email.starred ? "fill-[hsl(45,100%,50%)] text-[hsl(45,100%,50%)]" : ""
           )} />
         </Button>
         <Button variant="ghost" size="icon">
@@ -95,7 +93,7 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
         <Button 
           onClick={handleSummarize}
           disabled={isSummarizing}
-          className="gap-2 bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90"
+          className="gap-2 rounded-xl"
         >
           {isSummarizing ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -108,13 +106,13 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
 
       {/* AI Summary Card */}
       {(summary || isSummarizing) && (
-        <div className="mx-4 mt-4 p-4 bg-primary/5 border border-primary/20 rounded-xl">
+        <div className="mx-4 mt-4 p-4 bg-[hsl(45,100%,95%)] border border-[hsl(45,100%,85%)] rounded-2xl">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center">
               <Sparkles className="h-3 w-3 text-primary" />
             </div>
             <span className="text-sm font-medium text-primary">AI Summary</span>
-            {summary && <CheckCircle className="h-4 w-4 text-green-500 ml-auto" />}
+            {summary && <CheckCircle className="h-4 w-4 text-[hsl(160,70%,45%)] ml-auto" />}
           </div>
           {isSummarizing ? (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -132,7 +130,7 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
       {/* Email Content */}
       <div className="flex-1 overflow-y-auto p-6">
         <div className="max-w-3xl">
-          <h1 className="text-2xl font-semibold text-foreground mb-4">
+          <h1 className="text-2xl font-semibold font-['Space_Grotesk'] text-foreground mb-4">
             {email.subject}
           </h1>
           
@@ -158,8 +156,8 @@ export const EmailView = ({ email, onBack, onToggleStar }: EmailViewProps) => {
       </div>
 
       {/* Reply Box */}
-      <div className="p-4 border-t border-border">
-        <div className="flex items-center gap-2 p-3 bg-secondary/50 rounded-lg cursor-pointer hover:bg-secondary transition-colors">
+      <div className="p-4 border-t border-border bg-card">
+        <div className="flex items-center gap-2 p-3 bg-secondary rounded-xl cursor-pointer hover:bg-secondary/80 transition-colors">
           <Reply className="h-4 w-4 text-muted-foreground" />
           <span className="text-sm text-muted-foreground">Click here to reply</span>
         </div>

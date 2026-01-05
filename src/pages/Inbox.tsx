@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/email/Sidebar";
 import { EmailList } from "@/components/email/EmailList";
 import { EmailView } from "@/components/email/EmailView";
 import { SearchBar } from "@/components/email/SearchBar";
-import { Menu } from "lucide-react";
+import { AIChat } from "@/components/email/AIChat";
+import { Menu, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export interface Email {
@@ -198,11 +200,26 @@ View this pull request on GitHub: https://github.com/...`,
 ];
 
 const Inbox = () => {
+  const navigate = useNavigate();
   const [emails, setEmails] = useState<Email[]>(mockEmails);
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
   const [activeFolder, setActiveFolder] = useState("inbox");
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const user = localStorage.getItem("inboxiq_user");
+    if (user) {
+      const parsed = JSON.parse(user);
+      setUserName(parsed.name);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("inboxiq_user");
+    navigate("/");
+  };
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -235,7 +252,7 @@ const Inbox = () => {
   return (
     <div className="h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="h-16 border-b border-border flex items-center px-4 gap-4 flex-shrink-0">
+      <header className="h-16 border-b border-border flex items-center px-4 gap-4 flex-shrink-0 bg-card">
         <Button 
           variant="ghost" 
           size="icon" 
@@ -246,12 +263,25 @@ const Inbox = () => {
         </Button>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">IQ</span>
+            <div className="flex gap-0.5">
+              <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full" />
+              <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full" />
+            </div>
           </div>
-          <span className="text-xl font-semibold text-foreground hidden sm:block">InboxIQ</span>
+          <span className="text-xl font-bold font-['Space_Grotesk'] text-foreground hidden sm:block">InboxIQ</span>
         </div>
         <div className="flex-1 max-w-2xl mx-4">
           <SearchBar onSearch={handleSearch} />
+        </div>
+        <div className="flex items-center gap-3">
+          {userName && (
+            <span className="text-sm text-muted-foreground hidden md:block">
+              Hi, {userName}
+            </span>
+          )}
+          <Button variant="ghost" size="icon" onClick={handleLogout} title="Logout">
+            <LogOut className="h-4 w-4" />
+          </Button>
         </div>
       </header>
 
@@ -266,27 +296,36 @@ const Inbox = () => {
           unreadCount={emails.filter(e => !e.read).length}
         />
 
-        {/* Email List */}
-        <div className={`w-full md:w-96 border-r border-border flex-shrink-0 overflow-hidden ${selectedEmail ? 'hidden md:flex' : 'flex'} flex-col`}>
-          <EmailList 
-            emails={filteredEmails}
-            selectedId={selectedEmail?.id}
-            onSelect={(email) => {
-              setSelectedEmail(email);
-              handleMarkRead(email.id);
-            }}
-            onToggleStar={handleToggleStar}
-          />
-        </div>
+        {/* Show AI Chat or Email */}
+        {activeFolder === "ai-chat" ? (
+          <div className="flex-1 overflow-hidden">
+            <AIChat />
+          </div>
+        ) : (
+          <>
+            {/* Email List */}
+            <div className={`w-full md:w-96 border-r border-border flex-shrink-0 overflow-hidden ${selectedEmail ? 'hidden md:flex' : 'flex'} flex-col bg-card`}>
+              <EmailList 
+                emails={filteredEmails}
+                selectedId={selectedEmail?.id}
+                onSelect={(email) => {
+                  setSelectedEmail(email);
+                  handleMarkRead(email.id);
+                }}
+                onToggleStar={handleToggleStar}
+              />
+            </div>
 
-        {/* Email View */}
-        <div className={`flex-1 overflow-hidden ${selectedEmail ? 'flex' : 'hidden md:flex'}`}>
-          <EmailView 
-            email={selectedEmail}
-            onBack={() => setSelectedEmail(null)}
-            onToggleStar={handleToggleStar}
-          />
-        </div>
+            {/* Email View */}
+            <div className={`flex-1 overflow-hidden ${selectedEmail ? 'flex' : 'hidden md:flex'}`}>
+              <EmailView 
+                email={selectedEmail}
+                onBack={() => setSelectedEmail(null)}
+                onToggleStar={handleToggleStar}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

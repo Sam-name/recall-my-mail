@@ -40,7 +40,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
       <form onSubmit={handleSubmit}>
         <div className={cn(
           "relative flex items-center bg-secondary rounded-xl transition-all",
-          isFocused && "ring-2 ring-primary"
+          isFocused && "ring-2 ring-primary shadow-sm"
         )}>
           <div className="pl-4 flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
@@ -69,7 +69,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
 
       {/* Search Suggestions Dropdown */}
       {isFocused && !query && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-background border border-border rounded-xl shadow-lg overflow-hidden z-50">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-2xl shadow-lg overflow-hidden z-50">
           <div className="p-3 border-b border-border">
             <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               <Sparkles className="h-3 w-3 text-primary" />
@@ -84,7 +84,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
               <button
                 key={suggestion}
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="w-full text-left px-2 py-2 text-sm text-foreground hover:bg-secondary rounded-lg transition-colors"
+                className="w-full text-left px-3 py-2 text-sm text-foreground hover:bg-secondary rounded-xl transition-colors"
               >
                 "{suggestion}"
               </button>
