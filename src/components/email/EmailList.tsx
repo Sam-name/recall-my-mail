@@ -32,7 +32,7 @@ export const EmailList = ({ emails, selectedId, onSelect, onToggleStar }: EmailL
             selectedId === email.id 
               ? "bg-primary/5" 
               : "hover:bg-secondary/50",
-            !email.read && "bg-primary/5"
+            !email.read && "bg-[hsl(45,100%,95%)]"
           )}
         >
           <button
@@ -46,8 +46,8 @@ export const EmailList = ({ emails, selectedId, onSelect, onToggleStar }: EmailL
               className={cn(
                 "h-4 w-4 transition-colors",
                 email.starred 
-                  ? "fill-yellow-400 text-yellow-400" 
-                  : "text-muted-foreground hover:text-yellow-400"
+                  ? "fill-[hsl(45,100%,50%)] text-[hsl(45,100%,50%)]" 
+                  : "text-muted-foreground hover:text-[hsl(45,100%,50%)]"
               )} 
             />
           </button>
@@ -78,7 +78,7 @@ export const EmailList = ({ emails, selectedId, onSelect, onToggleStar }: EmailL
                 {email.labels.slice(0, 2).map((label) => (
                   <span 
                     key={label}
-                    className="text-[10px] px-1.5 py-0.5 bg-secondary text-muted-foreground rounded"
+                    className="text-[10px] px-1.5 py-0.5 bg-secondary text-muted-foreground rounded-full"
                   >
                     {label}
                   </span>

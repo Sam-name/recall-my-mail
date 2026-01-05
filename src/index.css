@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,83 +6,90 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    --background: 40 20% 98%;
+    --foreground: 220 20% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 220 20% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 220 20% 15%;
 
-    --primary: 217 91% 60%;
+    --primary: 220 85% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 40 25% 94%;
+    --secondary-foreground: 220 20% 15%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 40 15% 92%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 100% 60%;
+    --accent-foreground: 220 20% 15%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 220 85% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 20% 15%;
+    --sidebar-primary: 220 85% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 14% 96%;
-    --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 40 25% 94%;
+    --sidebar-accent-foreground: 220 20% 15%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 220 85% 50%;
+
+    /* Custom brand colors */
+    --brand-yellow: 45 100% 70%;
+    --brand-blue: 220 85% 50%;
+    --brand-purple: 270 70% 60%;
+    --brand-green: 160 70% 45%;
+    --gradient-warm: linear-gradient(135deg, hsl(45, 100%, 85%), hsl(40, 100%, 92%));
   }
 
   .dark {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 98%;
+    --background: 220 20% 8%;
+    --foreground: 40 20% 98%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 20% 12%;
+    --card-foreground: 40 20% 98%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 20% 12%;
+    --popover-foreground: 40 20% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 220 85% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 40 20% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 220 15% 18%;
+    --muted-foreground: 220 10% 60%;
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 45 100% 60%;
+    --accent-foreground: 220 20% 15%;
 
     --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 40 20% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 217 91% 60%;
+    --border: 220 15% 25%;
+    --input: 220 15% 25%;
+    --ring: 220 85% 60%;
 
-    --sidebar-background: 0 0% 8%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 220 20% 10%;
+    --sidebar-foreground: 40 20% 98%;
+    --sidebar-primary: 220 85% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 220 15% 18%;
+    --sidebar-accent-foreground: 40 20% 98%;
+    --sidebar-border: 220 15% 25%;
+    --sidebar-ring: 220 85% 60%;
   }
 }
 
@@ -92,11 +99,25 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', sans-serif;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@layer utilities {
+  .gradient-warm {
+    background: linear-gradient(135deg, hsl(45, 100%, 88%), hsl(40, 100%, 94%));
+  }
+  
+  .gradient-hero {
+    background: linear-gradient(180deg, hsl(40, 30%, 98%) 0%, hsl(45, 100%, 95%) 50%, hsl(40, 30%, 98%) 100%);
   }
 }
