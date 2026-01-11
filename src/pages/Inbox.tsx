@@ -5,6 +5,7 @@ import { EmailList } from "@/components/email/EmailList";
 import { EmailView } from "@/components/email/EmailView";
 import { SearchBar } from "@/components/email/SearchBar";
 import { AIChat } from "@/components/email/AIChat";
+import { ComposeModal } from "@/components/email/ComposeModal";
 import { Menu, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -207,6 +208,7 @@ const Inbox = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [userName, setUserName] = useState("");
+  const [composeOpen, setComposeOpen] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem("inboxiq_user");
@@ -294,6 +296,7 @@ const Inbox = () => {
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
           unreadCount={emails.filter(e => !e.read).length}
+          onCompose={() => setComposeOpen(true)}
         />
 
         {/* Show AI Chat or Email */}
@@ -327,6 +330,9 @@ const Inbox = () => {
           </>
         )}
       </div>
+
+      {/* Compose Modal */}
+      <ComposeModal open={composeOpen} onClose={() => setComposeOpen(false)} />
     </div>
   );
 };

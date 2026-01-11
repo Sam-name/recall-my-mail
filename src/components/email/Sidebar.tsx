@@ -20,6 +20,7 @@ interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
   unreadCount: number;
+  onCompose: () => void;
 }
 
 const folders = [
@@ -37,7 +38,7 @@ const labels = [
   { id: "social", label: "Social", color: "bg-[hsl(45,100%,50%)]" },
 ];
 
-export const Sidebar = ({ activeFolder, onFolderChange, isOpen, onClose, unreadCount }: SidebarProps) => {
+export const Sidebar = ({ activeFolder, onFolderChange, isOpen, onClose, unreadCount, onCompose }: SidebarProps) => {
   return (
     <>
       {/* Mobile overlay */}
@@ -53,7 +54,7 @@ export const Sidebar = ({ activeFolder, onFolderChange, isOpen, onClose, unreadC
         isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
         <div className="p-4 flex items-center justify-between lg:justify-center">
-          <Button className="w-full gap-2 rounded-xl h-11">
+          <Button onClick={onCompose} className="w-full gap-2 rounded-xl h-11">
             <PenSquare className="h-4 w-4" />
             Compose
           </Button>
